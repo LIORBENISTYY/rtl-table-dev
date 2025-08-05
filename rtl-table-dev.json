@@ -1,0 +1,47 @@
+{
+  "id": "com.custom.rtl.table.dev",
+  "version": "1.0.0",
+  "name": "RTL Table Dev",
+  "description": "Development version of RTL table with RTL layout",
+  "newInstancePrefix": "RtlTableDev",
+  "icon": "https://liorbenistyy.github.io/rtl-table-dev/icon-dev.png",
+  "vendor": "Lior Benisy",
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "com-custom-rtl-table-dev",
+      "url": "https://liorbenistyy.github.io/rtl-table-dev/rtl-table-dev.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    }
+  ],
+  "dataBindings": {
+    "mainBinding": {
+      "feeds": [
+        {
+          "id": "dimensions",
+          "type": "dimension",
+          "description": "Dimension columns"
+        },
+        {
+          "id": "measures",
+          "type": "mainStructureMember",
+          "description": "Measure columns"
+        }
+      ]
+    }
+  },
+  "properties": {
+    "rtlEnabled": {
+      "type": "boolean",
+      "description": "Enable Right-to-Left Layout",
+      "default": true
+    }
+  },
+  "methods": {},
+  "events": {},
+  "supportsMobile": true,
+  "supportsExport": true,
+  "supportsBookmark": true,
+  "supportsViewportLoading": true
+}
