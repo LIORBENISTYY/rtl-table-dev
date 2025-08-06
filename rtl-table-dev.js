@@ -8,7 +8,8 @@
         overflow: auto;
         direction: rtl;
         font-family: Arial, sans-serif;
-        font-size: 14px;
+        font-size: var(--font-size, 14px);
+        color: var(--text-color, #000000);
       }
 
       table {
@@ -25,18 +26,22 @@
       }
 
       th {
-        background-color: #f0f0f0;
+        background-color: var(--header-bg, #f0f0f0);
         font-weight: bold;
+      }
+
+      td {
+        background-color: var(--row-bg, #ffffff);
       }
     </style>
 
-    <table id="rtlTableDev">
+    <table id="rtlTable">
       <thead></thead>
       <tbody></tbody>
     </table>
   `;
 
-  class RtlTableDev extends HTMLElement {
+  class RtlTable extends HTMLElement {
     constructor() {
       super();
       this.attachShadow({ mode: "open" }).appendChild(template.content.cloneNode(true));
@@ -48,12 +53,24 @@
     }
 
     async onCustomWidgetAfterUpdate(changedProps) {
+      this.applyStyles();
       this.renderTable();
+    }
 
-      // Apply CSS class from Styling panel
-      if ("cssClass" in this._props) {
-        this.updateCssClass(this._props.cssClass);
-      }
+    applyStyles() {
+      const style = this.style;
+
+      if (this._props.headerBackgroundColor)
+        style.setProperty("--header-bg", this._props.headerBackgroundColor);
+
+      if (this._props.rowBackgroundColor)
+        style.setProperty("--row-bg", this._props.rowBackgroundColor);
+
+      if (this._props.textColor)
+        style.setProperty("--text-color", this._props.textColor);
+
+      if (this._props.fontSize)
+        style.setProperty("--font-size", `${this._props.fontSize}px`);
     }
 
     async renderTable() {
@@ -65,27 +82,24 @@
 
       if (!resultSet || !metadata) return;
 
-      const thead = this.shadowRoot.getElementById("rtlTableDev").querySelector("thead");
-      const tbody = this.shadowRoot.getElementById("rtlTableDev").querySelector("tbody");
+      const thead = this.shadowRoot.getElementById("rtlTable").querySelector("thead");
+      const tbody = this.shadowRoot.getElementById("rtlTable").querySelector("tbody");
 
       thead.innerHTML = "";
       tbody.innerHTML = "";
 
       const headers = [];
 
-      // Add dimensions
       for (const dimKey of metadata.feeds.dimensions?.values || []) {
         const dim = metadata.dimensions[dimKey];
         headers.push(dim?.description || dimKey);
       }
 
-      // Add measures
       for (const measKey of metadata.feeds.measures?.values || []) {
         const meas = metadata.mainStructureMembers[measKey];
         headers.push(meas?.label || measKey);
       }
 
-      // Render headers (reversed for RTL)
       const headerRow = document.createElement("tr");
       for (const h of headers.reverse()) {
         const th = document.createElement("th");
@@ -94,9 +108,9 @@
       }
       thead.appendChild(headerRow);
 
-      // Render data rows
       for (const row of resultSet) {
         const tr = document.createElement("tr");
+
         const rowCells = [];
 
         for (const dimKey of metadata.feeds.dimensions?.values || []) {
@@ -117,19 +131,10 @@
       }
     }
 
-    // Apply CSS class from the Styling Panel to the host element
-    updateCssClass(className) {
-      const host = this.shadowRoot.host;
-      host.className = ""; // Clear previous class
-      if (className && className.trim()) {
-        host.classList.add(...className.trim().split(" "));
-      }
-    }
-
     onCustomWidgetResize(width, height) {
-      // Optional: respond to resize if needed
+      // Optional resize handler
     }
   }
 
-  customElements.define("com-custom-rtl-table-dev", RtlTableDev);
+  customElements.define("com-custom-rtl-table", RtlTable);
 })();
