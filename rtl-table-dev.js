@@ -98,7 +98,6 @@
         tr.addEventListener("click", () => {
           this.highlightRow(rowIndex);
           this.dispatchEvent(new Event("onSelect"));
-          this.dispatchEvent(new Event("onRowClick")); // Optional legacy
         });
 
         const rowCells = [];
@@ -139,7 +138,7 @@
     }
 
     onCustomWidgetResize(width, height) {
-      // Optional: handle resize if needed
+      // Optional resize handling
     }
   }
 
