@@ -6,7 +6,7 @@
       :host {
         display: block;
         overflow: auto;
-        direction: rtl; /* Core RTL layout */
+        direction: rtl;
         font-family: Arial, sans-serif;
         font-size: 14px;
       }
@@ -43,12 +43,10 @@
       this._props = {};
     }
 
-    // Called before property or data updates
     onCustomWidgetBeforeUpdate(changedProps) {
       this._props = { ...this._props, ...changedProps };
     }
 
-    // Called after updates (data binding or props)
     async onCustomWidgetAfterUpdate(changedProps) {
       await this.renderTable();
     }
@@ -59,7 +57,6 @@
 
       const resultSet = dataBinding?.data;
       const metadata = dataBinding?.metadata;
-
       if (!resultSet || !metadata) return;
 
       const thead = this.shadowRoot.getElementById("rtlTable").querySelector("thead");
@@ -70,28 +67,24 @@
 
       const headers = [];
 
-      // Build headers from dimensions
       for (const dimKey of metadata.feeds.dimensions?.values || []) {
         const dim = metadata.dimensions[dimKey];
         headers.push(dim?.description || dimKey);
       }
 
-      // Build headers from measures
       for (const measKey of metadata.feeds.measures?.values || []) {
         const meas = metadata.mainStructureMembers[measKey];
         headers.push(meas?.label || measKey);
       }
 
-      // Render <thead>
       const headerRow = document.createElement("tr");
-      for (const h of headers.reverse()) { // RTL order
+      for (const h of headers.reverse()) {
         const th = document.createElement("th");
         th.textContent = h;
         headerRow.appendChild(th);
       }
       thead.appendChild(headerRow);
 
-      // Render <tbody>
       for (const row of resultSet) {
         const tr = document.createElement("tr");
         const rowCells = [];
@@ -114,9 +107,8 @@
       }
     }
 
-    // Optional: handle resize if needed
     onCustomWidgetResize(width, height) {
-      // Implement responsive logic if required
+      // Optional resize logic
     }
   }
 
