@@ -1,6 +1,6 @@
 {
   "id": "com.custom.rtl.table.dev",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": "RTL Table Dev",
   "description": "Custom RTL table with sorting, formatting, and CSS class support",
   "newInstancePrefix": "RtlTableDev",
@@ -50,4 +50,5 @@
   "supportsBookmark": true,
   "supportsViewportLoading": true
 }
+
 
