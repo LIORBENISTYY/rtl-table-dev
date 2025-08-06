@@ -39,7 +39,7 @@
     },
     "cssClass": {
       "type": "string",
-      "description": "CSS Class Name applied to the widget container",
+      "description":"CSS Class Name (applied to widget host)",
       "default": ""
     }
   },
@@ -50,3 +50,4 @@
   "supportsBookmark": true,
   "supportsViewportLoading": true
 }
+
