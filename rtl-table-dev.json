@@ -1,6 +1,6 @@
 {
   "id": "com.custom.rtl.table",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": "RTL Table",
   "description": "A table widget with full right-to-left layout support",
   "newInstancePrefix": "RtlTable",
@@ -59,3 +59,4 @@
   "supportsBookmark": true,
   "supportsViewportLoading": true
 }
+
