@@ -1,16 +1,16 @@
 {
-  "id": "com.custom.rtl.table.dev",
+  "id": "com.custom.rtl.table",
   "version": "1.0.0",
-  "name": "RTL Table Dev",
+  "name": "RTL Table",
   "description": "A table widget with full right-to-left layout support",
-  "newInstancePrefix": "RtlTableDev",
+  "newInstancePrefix": "RtlTable",
   "icon": "https://www.example.com/customwidgets/rtl-table/icon.png",
   "vendor": "Lior Benisty",
   "webcomponents": [
     {
       "kind": "main",
       "tag": "com-custom-rtl-table",
-      "url": "https://liorbenistyy.github.io/rtl-table-dev/rtl-table-dev.js",
+      "url": "https://liorbenistyy.github.io/rtl-table/rtl-table.js",
       "integrity": "",
       "ignoreIntegrity": true
     }
@@ -38,8 +38,22 @@
       "default": true
     }
   },
-  "methods": {},
-  "events": {},
+  "methods": {
+    "highlightRow": {
+      "description": "Highlights a specific row by index.",
+      "parameters": [
+        { "name": "index", "type": "integer", "description": "Row index to highlight" }
+      ]
+    },
+    "clearHighlight": {
+      "description": "Clears all highlighted rows."
+    }
+  },
+  "events": {
+    "onRowClick": {
+      "description": "Triggered when a row is clicked"
+    }
+  },
   "supportsMobile": true,
   "supportsExport": true,
   "supportsBookmark": true,
