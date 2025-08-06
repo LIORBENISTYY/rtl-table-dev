@@ -41,10 +41,15 @@
       super();
       this.attachShadow({ mode: "open" }).appendChild(template.content.cloneNode(true));
       this._props = {};
+      this._isDesignTime = false;
     }
 
     onCustomWidgetBeforeUpdate(changedProps) {
       this._props = { ...this._props, ...changedProps };
+
+      if (changedProps.designMode === true) {
+        this._isDesignTime = true;
+      }
     }
 
     async onCustomWidgetAfterUpdate(changedProps) {
@@ -52,6 +57,19 @@
     }
 
     async renderTable() {
+      const thead = this.shadowRoot.getElementById("rtlTable").querySelector("thead");
+      const tbody = this.shadowRoot.getElementById("rtlTable").querySelector("tbody");
+
+      thead.innerHTML = "";
+      tbody.innerHTML = "";
+
+      // Show sample in Design Mode
+      if (this._isDesignTime) {
+        this.renderSampleData(thead, tbody);
+        return;
+      }
+
+      // View Mode: real data
       const dataBinding = this.dataBindings?.getDataBinding("mainBinding");
       if (!dataBinding) return;
 
@@ -59,20 +77,31 @@
       const metadata = dataBinding?.metadata;
       if (!resultSet || !metadata) return;
 
-      const thead = this.shadowRoot.getElementById("rtlTable").querySelector("thead");
-      const tbody = this.shadowRoot.getElementById("rtlTable").querySelector("tbody");
+      const dimensionKeys = metadata.feeds.dimensions?.values || [];
+      const measureKeys = metadata.feeds.measures?.values || [];
 
-      thead.innerHTML = "";
-      tbody.innerHTML = "";
+      // ❗ If all dimensions and measures were removed, show empty table
+      if (dimensionKeys.length === 0 && measureKeys.length === 0) {
+        // Optional: display message
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.textContent = "⚠️ No Dimensions or Measures selected";
+        cell.colSpan = 1;
+        cell.style.textAlign = "center";
+        row.appendChild(cell);
+        tbody.appendChild(row);
+        return;
+      }
 
+      // Build headers
       const headers = [];
 
-      for (const dimKey of metadata.feeds.dimensions?.values || []) {
+      for (const dimKey of dimensionKeys) {
         const dim = metadata.dimensions[dimKey];
         headers.push(dim?.description || dimKey);
       }
 
-      for (const measKey of metadata.feeds.measures?.values || []) {
+      for (const measKey of measureKeys) {
         const meas = metadata.mainStructureMembers[measKey];
         headers.push(meas?.label || measKey);
       }
@@ -85,16 +114,17 @@
       }
       thead.appendChild(headerRow);
 
+      // Build rows
       for (const row of resultSet) {
         const tr = document.createElement("tr");
         const rowCells = [];
 
-        for (const dimKey of metadata.feeds.dimensions?.values || []) {
-          rowCells.push(row[dimKey]?.label ?? "");
+        for (const key of dimensionKeys) {
+          rowCells.push(row[key]?.label ?? "");
         }
 
-        for (const measKey of metadata.feeds.measures?.values || []) {
-          rowCells.push(row[measKey]?.formatted ?? row[measKey]?.raw ?? "");
+        for (const key of measureKeys) {
+          rowCells.push(row[key]?.formatted ?? row[key]?.raw ?? "");
         }
 
         for (const cell of rowCells.reverse()) {
@@ -107,8 +137,33 @@
       }
     }
 
+    renderSampleData(thead, tbody) {
+      const headers = ["Week", "Year", "Quarter"];
+      const headerRow = document.createElement("tr");
+
+      for (const h of headers.reverse()) {
+        const th = document.createElement("th");
+        th.textContent = h;
+        headerRow.appendChild(th);
+      }
+      thead.appendChild(headerRow);
+
+      for (let i = 1; i <= 3; i++) {
+        const tr = document.createElement("tr");
+        const sampleRow = ["W" + i, "20" + i, "Q" + i];
+
+        for (const value of sampleRow.reverse()) {
+          const td = document.createElement("td");
+          td.textContent = value;
+          tr.appendChild(td);
+        }
+
+        tbody.appendChild(tr);
+      }
+    }
+
     onCustomWidgetResize(width, height) {
-      // Optional resize logic
+      // Optional
     }
   }
 
