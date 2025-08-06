@@ -9,7 +9,7 @@
   "webcomponents": [
     {
       "kind": "main",
-      "tag":"com-custom-rtl-table-dev",
+      "tag": "com-custom-rtl-table",
       "url": "https://liorbenistyy.github.io/rtl-table-dev/rtl-table-dev.js",
       "integrity": "",
       "ignoreIntegrity": true
@@ -36,26 +36,6 @@
       "type": "boolean",
       "description": "Enable Right-to-Left Layout",
       "default": true
-    },
-    "headerBackgroundColor": {
-      "type": "string",
-      "description": "Header background color",
-      "default": "#f0f0f0"
-    },
-    "rowBackgroundColor": {
-      "type": "string",
-      "description": "Row background color",
-      "default": "#ffffff"
-    },
-    "textColor": {
-      "type": "string",
-      "description": "Text color",
-      "default": "#000000"
-    },
-    "fontSize": {
-      "type": "integer",
-      "description": "Font size (px)",
-      "default": 14
     }
   },
   "methods": {},
