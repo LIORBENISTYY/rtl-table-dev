@@ -50,10 +50,7 @@
     }
   },
   "events": {
-    "onRowClick": {
-    "description": "Triggered when a row is clicked"
-   },
-  "onSelect": {
+    "onSelect": {
     "description": "Fired when a user selects a row"
    },
   "onResultChanged": {
