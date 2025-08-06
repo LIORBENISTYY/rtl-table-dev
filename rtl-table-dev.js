@@ -6,7 +6,7 @@
       :host {
         display: block;
         overflow: auto;
-        direction: rtl; /* RTL layout */
+        direction: rtl;
         font-family: Arial, sans-serif;
         font-size: 14px;
       }
@@ -49,6 +49,11 @@
 
     async onCustomWidgetAfterUpdate(changedProps) {
       this.renderTable();
+
+      // Apply CSS class from Styling panel
+      if ("cssClass" in this._props) {
+        this.updateCssClass(this._props.cssClass);
+      }
     }
 
     async renderTable() {
@@ -68,19 +73,19 @@
 
       const headers = [];
 
-      // Build headers from dimensions
+      // Add dimensions
       for (const dimKey of metadata.feeds.dimensions?.values || []) {
         const dim = metadata.dimensions[dimKey];
         headers.push(dim?.description || dimKey);
       }
 
-      // Build headers from measures
+      // Add measures
       for (const measKey of metadata.feeds.measures?.values || []) {
         const meas = metadata.mainStructureMembers[measKey];
         headers.push(meas?.label || measKey);
       }
 
-      // Render <thead>
+      // Render headers (reversed for RTL)
       const headerRow = document.createElement("tr");
       for (const h of headers.reverse()) {
         const th = document.createElement("th");
@@ -89,7 +94,7 @@
       }
       thead.appendChild(headerRow);
 
-      // Render <tbody>
+      // Render data rows
       for (const row of resultSet) {
         const tr = document.createElement("tr");
         const rowCells = [];
@@ -112,8 +117,17 @@
       }
     }
 
+    // Apply CSS class from the Styling Panel to the host element
+    updateCssClass(className) {
+      const host = this.shadowRoot.host;
+      host.className = ""; // Clear previous class
+      if (className && className.trim()) {
+        host.classList.add(...className.trim().split(" "));
+      }
+    }
+
     onCustomWidgetResize(width, height) {
-      // Optional: handle resizing
+      // Optional: respond to resize if needed
     }
   }
 
