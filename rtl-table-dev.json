@@ -2,10 +2,10 @@
   "id": "com.custom.rtl.table.dev",
   "version": "1.1.0",
   "name": "RTL Table Dev",
-  "description": "Custom RTL table with sorting, formatting, and column control",
+  "description": "Custom RTL table with sorting, formatting, and CSS class support",
   "newInstancePrefix": "RtlTableDev",
   "icon": "https://liorbenistyy.github.io/rtl-table-dev/icon-dev.png",
-  "vendor": "Lior Benisty",
+  "vendor": "CustomDev",
   "webcomponents": [
     {
       "kind": "main",
@@ -37,34 +37,10 @@
       "description": "Enable Right-to-Left Layout",
       "default": true
     },
-    "sortBy": {
+    "cssClass": {
       "type": "string",
-      "description": "Column ID to sort by",
+      "description": "CSS Class Name applied to the widget container",
       "default": ""
-    },
-    "sortOrder": {
-      "type": "string",
-      "description": "Sorting order: 'asc' or 'desc'",
-      "default": "asc"
-    },
-    "visibleColumns": {
-      "type": "string[]",
-      "description": "List of visible column IDs (empty = show all)",
-      "default": []
-    },
-    "decimalPlaces": {
-      "type": "integer",
-      "description": "Number of decimal places for numeric values",
-      "default": 2
-    },
-    "showThousandsSeparator": {
-      "type": "boolean",
-      "description": "Show thousands separator in numeric columns",
-      "default": true
-    },
-    "formatRules": {
-      "type": "Object<string>",
-      "description": "Column-specific formatting rules (e.g., thresholds)"
     }
   },
   "methods": {},
