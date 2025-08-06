@@ -1,15 +1,15 @@
 {
   "id": "com.custom.rtl.table.dev",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "name": "RTL Table Dev",
-  "description": "Custom RTL table with sorting, formatting, and CSS class support",
+  "description": "A table widget with full right-to-left layout support",
   "newInstancePrefix": "RtlTableDev",
-  "icon": "https://liorbenistyy.github.io/rtl-table-dev/icon-dev.png",
-  "vendor": "CustomDev",
+  "icon": "https://www.example.com/customwidgets/rtl-table/icon.png",
+  "vendor": "Lior Benisty",
   "webcomponents": [
     {
       "kind": "main",
-      "tag": "com-custom-rtl-table-dev",
+      "tag":"com-custom-rtl-table-dev",
       "url": "https://liorbenistyy.github.io/rtl-table-dev/rtl-table-dev.js",
       "integrity": "",
       "ignoreIntegrity": true
@@ -37,10 +37,25 @@
       "description": "Enable Right-to-Left Layout",
       "default": true
     },
-    "cssClass": {
+    "headerBackgroundColor": {
       "type": "string",
-      "description":"CSS Class Name (applied to widget host)",
-      "default": ""
+      "description": "Header background color",
+      "default": "#f0f0f0"
+    },
+    "rowBackgroundColor": {
+      "type": "string",
+      "description": "Row background color",
+      "default": "#ffffff"
+    },
+    "textColor": {
+      "type": "string",
+      "description": "Text color",
+      "default": "#000000"
+    },
+    "fontSize": {
+      "type": "integer",
+      "description": "Font size (px)",
+      "default": 14
     }
   },
   "methods": {},
@@ -50,5 +65,3 @@
   "supportsBookmark": true,
   "supportsViewportLoading": true
 }
-
-
