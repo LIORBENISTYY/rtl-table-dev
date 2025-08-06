@@ -51,12 +51,22 @@
   },
   "events": {
     "onRowClick": {
-      "description": "Triggered when a row is clicked"
-    }
+    "description": "Triggered when a row is clicked"
+   },
+  "onSelect": {
+    "description": "Fired when a user selects a row"
+   },
+  "onResultChanged": {
+    "description": "Fired after the table data is rendered"
+   },
+  "onAfterDataEntryProcess": {
+    "description": "Fired after data entry or external update is finished"
+   }
   },
   "supportsMobile": true,
   "supportsExport": true,
   "supportsBookmark": true,
   "supportsViewportLoading": true
 }
+
 
