@@ -46,7 +46,6 @@
 
     onCustomWidgetBeforeUpdate(changedProps) {
       this._props = { ...this._props, ...changedProps };
-
       if (changedProps.designMode === true) {
         this._isDesignTime = true;
       }
@@ -63,13 +62,11 @@
       thead.innerHTML = "";
       tbody.innerHTML = "";
 
-      // Show sample in Design Mode
       if (this._isDesignTime) {
         this.renderSampleData(thead, tbody);
         return;
       }
 
-      // View Mode: real data
       const dataBinding = this.dataBindings?.getDataBinding("mainBinding");
       if (!dataBinding) return;
 
@@ -80,9 +77,10 @@
       const dimensionKeys = metadata.feeds.dimensions?.values || [];
       const measureKeys = metadata.feeds.measures?.values || [];
 
-      // ❗ If all dimensions and measures were removed, show empty table
-      if (dimensionKeys.length === 0 && measureKeys.length === 0) {
-        // Optional: display message
+      const hasDimensions = dimensionKeys.length > 0;
+      const hasMeasures = measureKeys.length > 0;
+
+      if (!hasDimensions && !hasMeasures) {
         const row = document.createElement("tr");
         const cell = document.createElement("td");
         cell.textContent = "⚠️ No Dimensions or Measures selected";
@@ -120,11 +118,12 @@
         const rowCells = [];
 
         for (const key of dimensionKeys) {
-          rowCells.push(row[key]?.label ?? "");
+          // Only add if key exists in row
+          rowCells.push(key in row ? row[key]?.label ?? "" : "");
         }
 
         for (const key of measureKeys) {
-          rowCells.push(row[key]?.formatted ?? row[key]?.raw ?? "");
+          rowCells.push(key in row ? (row[key]?.formatted ?? row[key]?.raw ?? "") : "");
         }
 
         for (const cell of rowCells.reverse()) {
@@ -163,7 +162,7 @@
     }
 
     onCustomWidgetResize(width, height) {
-      // Optional
+      // Optional resize logic
     }
   }
 
