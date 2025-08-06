@@ -10,25 +10,30 @@
         font-family: Arial, sans-serif;
         font-size: 14px;
       }
+
       table {
         width: 100%;
         border-collapse: collapse;
         direction: rtl;
         text-align: right;
       }
+
       th, td {
         border: 1px solid #ccc;
         padding: 8px;
         white-space: nowrap;
       }
+
       th {
         background-color: #f0f0f0;
         font-weight: bold;
       }
+
       tr.highlighted {
         background-color: #ffffcc !important;
       }
     </style>
+
     <table id="rtlTable">
       <thead></thead>
       <tbody></tbody>
@@ -47,7 +52,8 @@
     }
 
     async onCustomWidgetAfterUpdate(changedProps) {
-      this.renderTable();
+      await this.renderTable();
+      this.dispatchEvent(new Event("onResultChanged"));
     }
 
     async renderTable() {
@@ -71,6 +77,7 @@
         const dim = metadata.dimensions[dimKey];
         headers.push(dim?.description || dimKey);
       }
+
       for (const measKey of metadata.feeds.measures?.values || []) {
         const meas = metadata.mainStructureMembers[measKey];
         headers.push(meas?.label || measKey);
@@ -89,7 +96,9 @@
         tr.dataset.index = rowIndex;
 
         tr.addEventListener("click", () => {
-          this.dispatchEvent(new Event("onRowClick"));
+          this.highlightRow(rowIndex);
+          this.dispatchEvent(new Event("onSelect"));
+          this.dispatchEvent(new Event("onRowClick")); // Optional legacy
         });
 
         const rowCells = [];
@@ -114,7 +123,7 @@
 
     highlightRow(index) {
       const rows = this.shadowRoot.getElementById("rtlTable").querySelectorAll("tbody tr");
-      this.clearHighlight(); // Remove existing highlights
+      this.clearHighlight();
       if (rows[index]) {
         rows[index].classList.add("highlighted");
       }
@@ -123,6 +132,10 @@
     clearHighlight() {
       const rows = this.shadowRoot.getElementById("rtlTable").querySelectorAll("tbody tr");
       rows.forEach(row => row.classList.remove("highlighted"));
+    }
+
+    triggerAfterDataEntryProcess() {
+      this.dispatchEvent(new Event("onAfterDataEntryProcess"));
     }
 
     onCustomWidgetResize(width, height) {
