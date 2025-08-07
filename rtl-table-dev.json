@@ -1,6 +1,6 @@
 {
   "id": "com.custom.rtl.table",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": "RTL Table",
   "description": "A table widget with full right-to-left layout support",
   "newInstancePrefix": "RtlTable",
@@ -18,16 +18,8 @@
   "dataBindings": {
     "mainBinding": {
       "feeds": [
-        {
-          "id": "dimensions",
-          "type": "dimension",
-          "description": "Dimension columns"
-        },
-        {
-          "id": "measures",
-          "type": "mainStructureMember",
-          "description": "Measure columns"
-        }
+        { "id": "dimensions", "type": "dimension", "description": "Dimension columns" },
+        { "id": "measures", "type": "mainStructureMember", "description": "Measure columns" }
       ]
     }
   },
@@ -41,29 +33,43 @@
   "methods": {
     "highlightRow": {
       "description": "Highlights a specific row by index.",
-      "parameters": [
-        { "name": "index", "type": "integer", "description": "Row index to highlight" }
-      ]
+      "parameters": [{ "name": "index", "type": "integer" }]
     },
     "clearHighlight": {
       "description": "Clears all highlighted rows."
+    },
+    "setVisible": {
+      "description": "Shows or hides the widget",
+      "parameters": [{ "name": "visible", "type": "boolean" }]
+    },
+    "setEnabled": {
+      "description": "Enables or disables interaction",
+      "parameters": [{ "name": "enabled", "type": "boolean" }]
+    },
+    "setBackgroundColor": {
+      "description": "Sets the background color",
+      "parameters": [{ "name": "color", "type": "string" }]
+    },
+    "setTextColor": {
+      "description": "Sets the text color",
+      "parameters": [{ "name": "color", "type": "string" }]
+    },
+    "setFontSize": {
+      "description": "Sets font size in pixels",
+      "parameters": [{ "name": "size", "type": "integer" }]
+    },
+    "setBorder": {
+      "description": "Sets border style (CSS)",
+      "parameters": [{ "name": "style", "type": "string" }]
     }
   },
   "events": {
-    "onSelect": {
-    "description": "Fired when a user selects a row"
-   },
-  "onResultChanged": {
-    "description": "Fired after the table data is rendered"
-   },
-  "onAfterDataEntryProcess": {
-    "description": "Fired after data entry or external update is finished"
-   }
+    "onSelect": { "description": "Fired when a user selects a row" },
+    "onResultChanged": { "description": "Fired after the table data is rendered" },
+    "onAfterDataEntryProcess": { "description": "Fired after data entry or external update is finished" }
   },
   "supportsMobile": true,
   "supportsExport": true,
   "supportsBookmark": true,
   "supportsViewportLoading": true
 }
-
-
