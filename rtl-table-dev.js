@@ -137,8 +137,35 @@
       this.dispatchEvent(new Event("onAfterDataEntryProcess"));
     }
 
+    // ✅ פונקציות סטנדרטיות כמו ב־SAC
+
+    setVisible(visible) {
+      this.style.display = visible ? "block" : "none";
+    }
+
+    setEnabled(enabled) {
+      this.style.pointerEvents = enabled ? "auto" : "none";
+      this.style.opacity = enabled ? "1" : "0.5";
+    }
+
+    setBackgroundColor(color) {
+      this.style.backgroundColor = color;
+    }
+
+    setTextColor(color) {
+      this.style.color = color;
+    }
+
+    setFontSize(size) {
+      this.style.fontSize = `${size}px`;
+    }
+
+    setBorder(style) {
+      this.style.border = style;
+    }
+
     onCustomWidgetResize(width, height) {
-      // Optional resize handling
+      // אופציונלי
     }
   }
 
